@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let cartData = [];
 
-  // Fetch cart data
   async function fetchCartData() {
     try {
       const response = await fetch(API_URL);
@@ -23,9 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Render cart items
   function renderCartItems() {
-    cartItemsContainer.innerHTML = ""; // Clear existing items
+    cartItemsContainer.innerHTML = "";
 
     cartData.forEach((item, index) => {
       const cartItem = document.createElement("div");
@@ -58,23 +56,18 @@ document.addEventListener("DOMContentLoaded", () => {
     attachEventListeners();
   }
 
-  // Attach event listeners
   function attachEventListeners() {
-    // Quantity change
     document.querySelectorAll('input[type="number"]').forEach((input) => {
       input.addEventListener("change", handleQuantityChange);
     });
 
-    // Remove item
     document.querySelectorAll(".remove-btn").forEach((button) => {
       button.addEventListener("click", handleRemoveItem);
     });
 
-    // Checkout button
     checkoutButton.addEventListener("click", handleCheckout);
   }
 
-  // Handle quantity change
   function handleQuantityChange(event) {
     const index = event.target.dataset.index;
     const newQuantity = parseInt(event.target.value);
@@ -83,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
       cartData[index].quantity = newQuantity;
       cartData[index].line_price = cartData[index].price * newQuantity;
 
-      // Update the item's subtotal
       document.getElementById(`item-subtotal-${index}`).textContent = (
         cartData[index].line_price / 100
       ).toFixed(2);
@@ -91,35 +83,28 @@ document.addEventListener("DOMContentLoaded", () => {
       updateTotals();
     } else {
       alert("Quantity must be at least 1.");
-      event.target.value = cartData[index].quantity; // Reset to the previous value
+      event.target.value = cartData[index].quantity;
     }
   }
 
-  // Handle remove item
   function handleRemoveItem(event) {
     const index = event.target.dataset.index;
 
-    // Remove the item from the cart data
     cartData.splice(index, 1);
 
-    // Re-render cart items and update totals
     renderCartItems();
     updateTotals();
   }
 
-  // Handle checkout
   function handleCheckout() {
     alert("Thank you for your purchase! Proceeding to checkout...");
-    // You can implement further checkout logic here
   }
 
-  // Update subtotal and total prices
   function updateTotals() {
     const subtotal = cartData.reduce((sum, item) => sum + item.line_price, 0);
     subtotalElement.textContent = `₹${(subtotal / 100).toFixed(2)}`;
     totalElement.textContent = `₹${(subtotal / 100).toFixed(2)}`;
   }
 
-  // Initialize
   fetchCartData();
 });
