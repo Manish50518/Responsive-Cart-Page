@@ -375,7 +375,6 @@ nav a:hover {
   background-color: #f9f1e7;
   width: 393px;
   height: 390px;
-  border-radius: 5px;
 }
 
 .cart_totals_amt {
@@ -389,10 +388,17 @@ nav a:hover {
   color: #9f9f9f;
 }
 #total {
+  font-weight: 500;
   color: #b88e2f;
 }
 
+.sub-total {
+  color: #000000;
+}
+
 .totals {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 40px;
 }
 
@@ -516,4 +522,8 @@ footer p {
 .header_logo {
   width: 50px;
   height: 32px;
+}
+
+.cart_header {
+  margin-bottom: 60px;
 }
